@@ -71,6 +71,11 @@
                     newDirection = "E";
                 }
                 break;
+            case "S":
+                if (command == "l") {
+                    newDirection = "W";
+                }
+                break;
         }
         that.direction = newDirection;
     }
