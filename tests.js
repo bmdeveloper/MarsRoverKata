@@ -7,3 +7,7 @@ QUnit.test("Initialise mars rover location when it has no assigned value", funct
     var marsRover = new MarsRover();
     assert.deepEqual(marsRover.location, [0, 0], "Mars Rover location should initialise to [0,0] if no value has been set");
 });
+QUnit.test("Initialise mars rover direction", function (assert) {
+    var marsRover = new MarsRover([0, 0], "S");
+    assert.equal(marsRover.direction, "S", "Mars Rover direction should be the set value S");
+});

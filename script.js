@@ -1,4 +1,4 @@
-﻿function MarsRover(location) {
+﻿function MarsRover(location, direction) {
     var that = (this === window) ? {} : this;
     //initialise location
     if (!location) {
@@ -7,4 +7,6 @@
     else {
         that.location = location;
     }
+    //initialise direction
+    that.direction = direction;
 }
