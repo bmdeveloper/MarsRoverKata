@@ -178,6 +178,11 @@ QUnit.test("Mars Rover should stop when an obstacle is detected after Y wrapping
     marsRover.commandsInput("ffffff");
     assert.deepEqual(marsRover.location, [0, 4], "Mars Rover should stop at [0,0]");
 });
+QUnit.test("Mars Rover should stop when an obstacle is detected after X wrapping", function (assert) {
+    var marsRover = new MarsRover([9, 0], "E", [10, 10], [[1, 0], [8, 9]]);
+    marsRover.commandsInput("ff");
+    assert.deepEqual(marsRover.location, [0, 0], "Mars Rover should stop at [0,0]");
+});
 
 
 
