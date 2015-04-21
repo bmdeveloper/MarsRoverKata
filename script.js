@@ -43,7 +43,9 @@
         //loop through commands
         for (var i = 0; i < commands.length; i++) {
             if (commands[i] == "f" || commands[i] == "b") {
-                move(commands[i]);
+                if (!move(commands[i])) {
+                    break;
+                }
             }
             else if (commands[i] == "l" || commands[i] == "r") {
                 turn(commands[i]);
@@ -78,8 +80,12 @@
         }
 
         var newLocation = [that.location[0] + xIndexChange, that.location[1] + yIndexChange];
-        if(!isObstacle(newLocation)){
+        if (isObstacle(newLocation)) {
+            return false;
+        }
+        else {
             that.location = newLocation;
+            return true;
         }
     }
 
@@ -136,7 +142,6 @@
             }
         }
         return false;
-
     }
 
 }
