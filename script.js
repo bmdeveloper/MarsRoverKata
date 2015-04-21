@@ -22,10 +22,16 @@
     that.commandsInput = function (commands) {
         //loop through commands
         for (var i = 0; i < commands.length; i++) {
-            move(commands[i]);
+            if (commands[i] == "f" || commands[i] == "b") {
+                move(commands[i]);
+            }
+            else if (commands[i] == "l" || commands[i] == "r") {
+                turn(commands[i]);
+            }
         }
     }
 
+    //function that moves rover
     function move(command) {
         var yIndexChange = 0;
         var xIndexChange = 0;
@@ -54,6 +60,16 @@
         that.location = newLocation;
     }
 
-
+    //function that turns rover
+    function turn(command) {
+        switch (that.direction) {
+            case "N":
+                if (command == "l") {
+                    newDirection = "W";
+                }
+                break;
+        }
+        that.direction = newDirection;
+    }
 
 }
