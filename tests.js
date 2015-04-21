@@ -96,3 +96,11 @@ QUnit.test("Check right turn when facing West", function (assert) {
     marsRover.commandsInput("r");
     assert.equal(marsRover.direction, "N", "Mars Rover direction should change from West to North");
 });
+QUnit.module("Test both movement and turning");
+QUnit.test("Multiple commands test", function (assert) {
+    var marsRover = new MarsRover([0, 0], "N");
+    marsRover.commandsInput("ffrfrbl");
+    assert.deepEqual(marsRover.location, [1, 3], "Mars Rover location should be [1,3]");
+    assert.equal(marsRover.direction, "W", "Mars Rover direction should change to W");
+});
+
