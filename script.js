@@ -8,5 +8,10 @@
         that.location = location;
     }
     //initialise direction
-    that.direction = direction;
+    if (!direction) {
+        that.direction = "N";
+    }
+    else {
+        that.direction = direction;
+    }
 }

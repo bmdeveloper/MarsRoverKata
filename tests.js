@@ -11,3 +11,8 @@ QUnit.test("Initialise mars rover direction", function (assert) {
     var marsRover = new MarsRover([0, 0], "S");
     assert.equal(marsRover.direction, "S", "Mars Rover direction should be the set value S");
 });
+QUnit.test("Initialise mars rover direction when it has no assigned values", function (assert) {
+    var marsRover = new MarsRover([0, 0]);
+    assert.equal(marsRover.direction, "N", "Mars Rover direction should initialise to N if no value has been set");
+});
+
