@@ -51,7 +51,6 @@
                 turn(commands[i]);
             }
         }
-        wrapLocation();
     }
 
     //function that moves rover
@@ -80,6 +79,7 @@
         }
 
         var newLocation = [that.location[0] + xIndexChange, that.location[1] + yIndexChange];
+        newLocation = wrapLocation(newLocation);
         if (isObstacle(newLocation)) {
             return false;
         }
@@ -91,6 +91,7 @@
 
     //function that turns rover
     function turn(command) {
+        var newDirection;
         switch (that.direction) {
             case "N":
                 if (command == "l") {
@@ -129,8 +130,9 @@
     }
 
     //function that implements wrapping
-    function wrapLocation() {
-       that.location = [(that.location[0]+that.grid[0])%that.grid[0],(that.location[1] + that.grid[1])  % that.grid[1]];
+    function wrapLocation(location) {
+        var wrappedLocation = [(location[0] + that.grid[0]) % that.grid[0], (location[1] + that.grid[1]) % that.grid[1]];
+        return wrappedLocation;
     }
 
     //function to check for obstacles
