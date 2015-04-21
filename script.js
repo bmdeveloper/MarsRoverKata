@@ -4,16 +4,20 @@
     if (!location) {
         that.location = [0, 0];
     }
+
     else {
         that.location = location;
     }
+
     //initialise direction
     if (!direction) {
         that.direction = "N";
     }
+
     else {
         that.direction = direction;
     }
+
     //function that takes commands as an input
     that.commandsInput = function (commands) {
         //loop through commands
@@ -21,6 +25,7 @@
             move(commands[i]);
         }
     }
+
     function move(command) {
         var yIndexChange = 0;
         var xIndexChange = 0;
@@ -38,6 +43,12 @@
                 xIndexChange = -1;
                 break;
         }
+
+        //reverse values for backwards movement
+        if (command == "b") {
+            yIndexChange = yIndexChange * -1;
+        }
+
         var newLocation = [that.location[0] + xIndexChange, that.location[1] + yIndexChange];
         that.location = newLocation;
     }
