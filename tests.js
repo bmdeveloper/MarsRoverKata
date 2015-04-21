@@ -104,3 +104,4 @@ QUnit.test("Multiple commands test", function (assert) {
     assert.equal(marsRover.direction, "W", "Mars Rover direction should change to W");
 });
 
+
