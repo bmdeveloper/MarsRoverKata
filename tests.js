@@ -109,5 +109,12 @@ QUnit.test("Empty commands test", function (assert) {
     assert.deepEqual(marsRover.location, [0, 0], "Mars Rover location should be [0,0]");
     assert.equal(marsRover.direction, "N", "Mars Rover direction should stay at N");
 });
+QUnit.test("Invalid commands test", function (assert) {
+    var marsRover = new MarsRover([0, 0], "N");
+    marsRover.commandsInput("qwerty");
+    assert.deepEqual(marsRover.location, [0, 0], "Mars Rover location should be [0,0]");
+    assert.equal(marsRover.direction, "E", "Mars Rover direction should change to E and ignore the other invalid commands");
+});
+
 
 
