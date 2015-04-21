@@ -75,6 +75,9 @@
                 if (command == "l") {
                     newDirection = "W";
                 }
+                else if (command == "r") {
+                    newDirection = "E";
+                }
                 break;
         }
         that.direction = newDirection;
