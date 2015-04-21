@@ -78,8 +78,9 @@
         }
 
         var newLocation = [that.location[0] + xIndexChange, that.location[1] + yIndexChange];
-        isObstacle(newLocation);
-        that.location = newLocation;
+        if(!isObstacle(newLocation)){
+            that.location = newLocation;
+        }
     }
 
     //function that turns rover
@@ -131,8 +132,11 @@
         for (var i = 0; i < that.obstacles.length; i++) {
             if (location.toString() == that.obstacles[i].toString()) {
                 that.message = "Obstacle detected at " + location.toString();
+                return true;
             }
         }
+        return false;
+
     }
 
 }
