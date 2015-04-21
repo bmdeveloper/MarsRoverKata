@@ -149,6 +149,10 @@ QUnit.test("Initialise obstacles with assigned values", function (assert) {
     var marsRover = new MarsRover([0, 0], "N", [10, 10], [[4, 6], [2, 5], [0, 9]]);
     assert.deepEqual(marsRover.obstacles, [[4, 6], [2, 5], [0, 9]], "Mars Rover obstacles should be [4, 6], [2, 5], [0, 9]");
 });
+QUnit.test("Initialise obstacles when it has no assigned value", function (assert) {
+    var marsRover = new MarsRover([0, 0], "N", [10, 10], []);
+    assert.deepEqual(marsRover.obstacles, [], "Mars Rover obstacles should be the default empty");
+});
 
 
 

@@ -27,7 +27,12 @@
     }
 
     //initialise obstacles
+    if (!obstacles) {
+        that.obstacles = [];
+    }
+    else{
     that.obstacles = obstacles;
+    }
 
 
     //function that takes commands as an input
