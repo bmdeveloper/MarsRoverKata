@@ -129,6 +129,11 @@ QUnit.test("Check the top Y wrapping", function (assert) {
     marsRover.commandsInput("f");
     assert.deepEqual(marsRover.location, [0, 0], "Mars Rover Y location should go to 0");
 });
+QUnit.test("Check the top X wrapping", function (assert) {
+    var marsRover = new MarsRover([9, 0], "E", [10, 10]);
+    marsRover.commandsInput("f");
+    assert.deepEqual(marsRover.location, [0, 0], "Mars Rover X location should go to 0");
+});
 
 
 

@@ -110,6 +110,6 @@
 
     //function that implements wrapping
     function wrapLocation() {
-       that.location = [that.location[0],that.location[1] % that.grid[1]];
+       that.location = [that.location[0]%that.grid[0],that.location[1] % that.grid[1]];
     }
 }
