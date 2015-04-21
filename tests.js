@@ -25,3 +25,8 @@ QUnit.test("Check forward movement when facing South", function (assert) {
     marsRover.commandsInput("f");
     assert.deepEqual(marsRover.location, [0, 0], "Mars Rover location should move to [0,0]");
 });
+QUnit.test("Check forward movement when facing East", function (assert) {
+    var marsRover = new MarsRover([0, 0], "E");
+    marsRover.commandsInput("f");
+    assert.deepEqual(marsRover.location, [1, 0], "Mars Rover location should move to [1,0]");
+});

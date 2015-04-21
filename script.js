@@ -22,7 +22,8 @@
         }
     }
     function move(command) {
-        var yIndexChange;
+        var yIndexChange = 0;
+        var xIndexChange = 0;
         switch (that.direction) {
             case "N":
                 yIndexChange = 1;
@@ -30,8 +31,11 @@
             case "S":
                 yIndexChange = -1;
                 break;
+            case "E":
+                xIndexChange = 1;
+                break;
         }
-        var newLocation = [that.location[0],that.location[1]+yIndexChange];
+        var newLocation = [that.location[0] + xIndexChange, that.location[1] + yIndexChange];
         that.location = newLocation;
     }
 
