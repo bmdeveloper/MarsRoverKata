@@ -124,6 +124,11 @@ QUnit.test("Initialise default grid if there is no assigned value", function (as
     var marsRover = new MarsRover([0, 0], "N");
     assert.deepEqual(marsRover.grid, [100, 100], "Mars Rover grid should be the default [100,100] ");
 });
+QUnit.test("Check the top Y wrapping", function (assert) {
+    var marsRover = new MarsRover([0, 9], "N", [10, 10]);
+    marsRover.commandsInput("f");
+    assert.deepEqual(marsRover.location, [0, 0], "Mars Rover Y location should go to 0");
+});
 
 
 

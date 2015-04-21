@@ -25,6 +25,7 @@
     else {
         that.grid = grid;
     }
+
     //function that takes commands as an input
     that.commandsInput = function (commands) {
         //loop through commands
@@ -36,6 +37,7 @@
                 turn(commands[i]);
             }
         }
+        wrapLocation();
     }
 
     //function that moves rover
@@ -106,4 +108,8 @@
         that.direction = newDirection;
     }
 
+    //function that implements wrapping
+    function wrapLocation() {
+       that.location = [that.location[0],that.location[1] % that.grid[1]];
+    }
 }
