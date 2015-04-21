@@ -1,4 +1,4 @@
-﻿function MarsRover(location, direction) {
+﻿function MarsRover(location, direction, grid) {
     var that = (this === window) ? {} : this;
     //initialise location
     if (!location) {
@@ -17,6 +17,9 @@
     else {
         that.direction = direction;
     }
+
+    //initialise grid
+    that.grid = grid;
 
     //function that takes commands as an input
     that.commandsInput = function (commands) {

@@ -115,6 +115,11 @@ QUnit.test("Invalid commands test", function (assert) {
     assert.deepEqual(marsRover.location, [0, 0], "Mars Rover location should be [0,0]");
     assert.equal(marsRover.direction, "E", "Mars Rover direction should change to E and ignore the other invalid commands");
 });
+QUnit.module("Implement wrapping from one edge of the grid to another");
+QUnit.test("Initialise grid with assigned values", function (assert) {
+    var marsRover = new MarsRover([0, 0], "N", [10, 10]);
+    assert.deepEqual(marsRover.grid, [10, 10], "Mars Rover grid should be [10,10] ");
+});
 
 
 
