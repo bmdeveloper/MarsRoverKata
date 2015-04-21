@@ -144,6 +144,11 @@ QUnit.test("Check the bottom X wrapping", function (assert) {
     marsRover.commandsInput("b");
     assert.deepEqual(marsRover.location, [9, 0], "Mars Rover X location should go to 9");
 });
+QUnit.module("Implement obstacle detection before each move to a new square");
+QUnit.test("Initialise obstacles with assigned values", function (assert) {
+    var marsRover = new MarsRover([0, 0], "N", [10, 10], [[4, 6], [2, 5], [0, 9]]);
+    assert.deepEqual(marsRover.obstacles, [[4, 6], [2, 5], [0, 9]], "Mars Rover obstacles should be [4, 6], [2, 5], [0, 9]");
+});
 
 
 
