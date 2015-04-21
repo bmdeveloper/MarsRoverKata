@@ -120,6 +120,10 @@ QUnit.test("Initialise grid with assigned values", function (assert) {
     var marsRover = new MarsRover([0, 0], "N", [10, 10]);
     assert.deepEqual(marsRover.grid, [10, 10], "Mars Rover grid should be [10,10] ");
 });
+QUnit.test("Initialise default grid if there is no assigned value", function (assert) {
+    var marsRover = new MarsRover([0, 0], "N");
+    assert.deepEqual(marsRover.grid, [100, 100], "Mars Rover grid should be the default [100,100] ");
+});
 
 
 

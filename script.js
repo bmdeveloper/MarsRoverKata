@@ -19,8 +19,12 @@
     }
 
     //initialise grid
-    that.grid = grid;
-
+    if (!grid) {
+        that.grid = [100, 100];
+    }
+    else {
+        that.grid = grid;
+    }
     //function that takes commands as an input
     that.commandsInput = function (commands) {
         //loop through commands
