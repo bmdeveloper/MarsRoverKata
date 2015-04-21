@@ -34,6 +34,9 @@
     that.obstacles = obstacles;
     }
 
+    //MarsRover message variable
+    that.message = "";
+
 
     //function that takes commands as an input
     that.commandsInput = function (commands) {
@@ -75,6 +78,7 @@
         }
 
         var newLocation = [that.location[0] + xIndexChange, that.location[1] + yIndexChange];
+        isObstacle(newLocation);
         that.location = newLocation;
     }
 
@@ -121,4 +125,14 @@
     function wrapLocation() {
        that.location = [(that.location[0]+that.grid[0])%that.grid[0],(that.location[1] + that.grid[1])  % that.grid[1]];
     }
+
+    //function to check for obstacles
+    function isObstacle(location) {
+        for (var i = 0; i < that.obstacles.length; i++) {
+            if (location.toString() == that.obstacles[i].toString()) {
+                that.message = "Obstacle detected at " + location.toString();
+            }
+        }
+    }
+
 }
