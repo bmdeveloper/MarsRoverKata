@@ -158,6 +158,11 @@ QUnit.test("Mars Rover should detect an obstacle", function (assert) {
     marsRover.commandsInput("f");
     assert.equal(marsRover.message, "Obstacle detected at 0,1", "Mars Rover should write obstacle detected message");
 });
+QUnit.test("Check Mars Rover knows when there are no obstacles", function (assert) {
+    var marsRover = new MarsRover([0, 0], "N", [10, 10], []);
+    marsRover.commandsInput("f");
+    assert.equal(marsRover.message, "", "Mars Rover message should be empty");
+});
 
 
 
