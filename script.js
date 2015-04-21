@@ -91,6 +91,9 @@
                 if (command == "l") {
                     newDirection = "S";
                 }
+                else if (command == "r") {
+                    newDirection = "N";
+                }
                 break;
         }
         that.direction = newDirection;
