@@ -34,6 +34,9 @@
             case "E":
                 xIndexChange = 1;
                 break;
+            case "W":
+                xIndexChange = -1;
+                break;
         }
         var newLocation = [that.location[0] + xIndexChange, that.location[1] + yIndexChange];
         that.location = newLocation;
