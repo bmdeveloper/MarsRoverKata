@@ -27,6 +27,9 @@
             case "N":
                 yIndexChange = 1;
                 break;
+            case "S":
+                yIndexChange = -1;
+                break;
         }
         var newLocation = [that.location[0],that.location[1]+yIndexChange];
         that.location = newLocation;
