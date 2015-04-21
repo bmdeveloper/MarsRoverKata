@@ -103,5 +103,11 @@ QUnit.test("Multiple commands test", function (assert) {
     assert.deepEqual(marsRover.location, [1, 3], "Mars Rover location should be [1,3]");
     assert.equal(marsRover.direction, "W", "Mars Rover direction should change to W");
 });
+QUnit.test("Empty commands test", function (assert) {
+    var marsRover = new MarsRover([0, 0], "N");
+    marsRover.commandsInput("");
+    assert.deepEqual(marsRover.location, [0, 0], "Mars Rover location should be [0,0]");
+    assert.equal(marsRover.direction, "N", "Mars Rover direction should stay at N");
+});
 
 
