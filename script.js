@@ -47,6 +47,7 @@
         //reverse values for backwards movement
         if (command == "b") {
             yIndexChange = yIndexChange * -1;
+            xIndexChange = xIndexChange * -1;
         }
 
         var newLocation = [that.location[0] + xIndexChange, that.location[1] + yIndexChange];
