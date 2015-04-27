@@ -1,149 +1,282 @@
-﻿function MarsRover(location, direction, grid, obstacles) {
+﻿function MarsRover(location, direction, gridSize, obstacles) {
+
     var that = (this === window) ? {} : this;
-    //initialise location
-    if (!location) {
-        that.location = [0, 0];
-    }
+    var g = new Grid(location, gridSize, obstacles);
+    var direction = setDirection(direction, g);
 
-    else {
-        that.location = location;
-    }
-
-    //initialise direction
-    if (!direction) {
-        that.direction = "N";
-    }
-
-    else {
-        that.direction = direction;
-    }
-
-    //initialise grid
-    if (!grid) {
-        that.grid = [100, 100];
-    }
-    else {
-        that.grid = grid;
-    }
-
-    //initialise obstacles
-    if (!obstacles) {
-        that.obstacles = [];
-    }
-    else{
-    that.obstacles = obstacles;
-    }
-
-    //MarsRover message variable
+    that.location = [g.xCoordinate, g.yCoordinate];
+    that.direction = direction;
+    that.grid = g;
     that.message = "";
 
+    function setDirection(direction, grid) {
+        var directionToObject = [["N", new North(grid)], ["S", new South(grid)], ["E", new East(grid)], ["W", new West(grid)]];
+        var result = new North(grid);
+        directionToObject.forEach(function (element) {
+            if (element[0] == direction) {
+                result = element[1];
+            }
+        });
+
+        return result;
+    }
 
     //function that takes commands as an input
     that.commandsInput = function (commands) {
         //loop through commands
         for (var i = 0; i < commands.length; i++) {
-            if (commands[i] == "f" || commands[i] == "b") {
-                if (!move(commands[i])) {
+            switch (commands[i]) {
+                case "f":
+                    if (that.direction.moveForward()) {
+                        that.location = [g.xCoordinate, g.yCoordinate];
+                    }
+                    else {
+                        that.message = "Obstacle detected at " + g.detectedObstacleDetails;
+                        return;
+                    }
                     break;
-                }
+                case "b":
+                    if (that.direction.moveBackward()) {
+                        that.location = [g.xCoordinate, g.yCoordinate];
+                    }
+                    else {
+                        that.message = "Obstacle detected at " + g.detectedObstacleDetails;
+                        return;
+                    }
+                    break;
+                case "l":
+                    that.direction = that.direction.turnLeft()
+                    break;
+                case "r":
+                    that.direction = that.direction.turnRight()
+                    break;
             }
-            else if (commands[i] == "l" || commands[i] == "r") {
-                turn(commands[i]);
-            }
+
         }
     }
+}
 
-    //function that moves rover
-    function move(command) {
-        var yIndexChange = 0;
-        var xIndexChange = 0;
-        switch (that.direction) {
-            case "N":
-                yIndexChange = 1;
-                break;
-            case "S":
-                yIndexChange = -1;
-                break;
-            case "E":
-                xIndexChange = 1;
-                break;
-            case "W":
-                xIndexChange = -1;
-                break;
-        }
+function North(grid) {
+    var that = (this === window) ? {} : this;
+    that.moveForward = function () {
 
-        //reverse values for backwards movement
-        if (command == "b") {
-            yIndexChange = yIndexChange * -1;
-            xIndexChange = xIndexChange * -1;
-        }
-
-        var newLocation = [that.location[0] + xIndexChange, that.location[1] + yIndexChange];
-        newLocation = wrapLocation(newLocation);
-        if (isObstacle(newLocation)) {
-            return false;
-        }
-        else {
-            that.location = newLocation;
+        if (grid.moveYForward()) {
             return true;
         }
-    }
-
-    //function that turns rover
-    function turn(command) {
-        var newDirection;
-        switch (that.direction) {
-            case "N":
-                if (command == "l") {
-                    newDirection = "W";
-                }
-                else if (command == "r") {
-                    newDirection = "E";
-                }
-                break;
-            case "S":
-                if (command == "l") {
-                    newDirection = "W";
-                }
-                else if (command == "r") {
-                    newDirection = "E";
-                }
-                break;
-            case "E":
-                if (command == "l") {
-                    newDirection = "N";
-                }
-                else if (command == "r") {
-                    newDirection = "S";
-                }
-                break;
-            case "W":
-                if (command == "l") {
-                    newDirection = "S";
-                }
-                else if (command == "r") {
-                    newDirection = "N";
-                }
-                break;
+        else {
+            return false;
         }
-        that.direction = newDirection;
+    }
+    that.moveBackward = function () {
+        if (grid.moveYBackward()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
+    that.turnLeft = function () {
+        return new West(grid);
+    }
+    that.turnRight = function () {
+        return new East(grid);
+    }
+}
+
+function South(grid) {
+    var that = (this === window) ? {} : this;
+    that.moveForward = function () {
+        if (grid.moveYBackward()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    that.moveBackward = function () {
+        if (grid.moveYForward()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    that.turnLeft = function () {
+        return new West(grid);
+    }
+    that.turnRight = function () {
+        return new East(grid);
     }
 
-    //function that implements wrapping
-    function wrapLocation(location) {
-        var wrappedLocation = [(location[0] + that.grid[0]) % that.grid[0], (location[1] + that.grid[1]) % that.grid[1]];
-        return wrappedLocation;
+}
+
+function East(grid) {
+    var that = (this === window) ? {} : this;
+    that.moveForward = function () {
+        if (grid.moveXForward()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    that.moveBackward = function () {
+        if (grid.moveXBackward()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    that.turnLeft = function () {
+        return new North(grid);
+    }
+    that.turnRight = function () {
+        return new South(grid);
+    }
+}
+
+function West(grid) {
+    var that = (this === window) ? {} : this;
+    that.moveForward = function () {
+        if (grid.moveXBackward()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    that.moveBackward = function () {
+        if (grid.moveXForward()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    that.turnLeft = function () {
+        return new South(grid);
+    }
+    that.turnRight = function () {
+        return new North(grid);
+    }
+}
+
+function Grid(roverLocation, gridSize, obstacles) {
+    var that = (this === window) ? {} : this;
+
+    if (roverLocation) {
+        that.xCoordinate = roverLocation[0];
+        that.yCoordinate = roverLocation[1];
+    }
+
+    else {
+        that.xCoordinate = 0;
+        that.yCoordinate = 0;
+    }
+
+    if (gridSize) {
+        that.xLength = gridSize[0];
+        that.yLength = gridSize[1];
+    }
+
+    else {
+        that.xLength = 100;
+        that.yLength = 100;
+    }
+
+    if (obstacles) {
+        that.obstacles = obstacles;
+    }
+    else {
+        that.obstacles = [];
+    }
+
+    that.detectedObstacleDetails = "";
+
+    that.moveYForward = function () {
+        var result;
+        if (that.yCoordinate < (that.yLength - 1)) {
+            result = that.yCoordinate + 1;
+        }
+        else {
+            result = 0;
+        }
+        if (!isObstacle([that.xCoordinate, result])) {
+            that.yCoordinate = result;
+            return true;
+        }
+        else {
+            that.detectedObstacleDetails = [that.xCoordinate, result];
+            return false;
+        }
+    }
+
+    that.moveXForward = function () {
+        var result;
+        if (that.xCoordinate < (that.xLength - 1)) {
+            result = that.xCoordinate + 1;
+        }
+        else {
+            result = 0;
+        }
+        if (!isObstacle([result, that.yCoordinate])) {
+            that.xCoordinate = result;
+            return true
+        }
+        else {
+            that.detectedObstacleDetails = [result, that.yCoordinate];
+            return false;
+        }
+    }
+
+    that.moveYBackward = function () {
+        var result;
+        if (that.yCoordinate > 0) {
+            result = that.yCoordinate - 1;
+        }
+        else {
+            result = that.yLength - 1;
+        }
+        if (!isObstacle([that.xCoordinate, result])) {
+            that.yCoordinate = result;
+            return true;
+        }
+        else {
+            that.detectedObstacleDetails = [that.xCoordinate, result];
+            return false;
+        }
+    }
+
+    that.moveXBackward = function () {
+        var result;
+        if (that.xCoordinate > 0) {
+            result = that.xCoordinate - 1;
+        }
+        else {
+            result = that.xLength - 1;
+        }
+        if (!isObstacle([result, that.yCoordinate])) {
+            that.xCoordinate = result;
+            return true;
+        }
+        else {
+            that.detectedObstacleDetails = [result, that.yCoordinate];
+            return false;
+        }
     }
 
     //function to check for obstacles
     function isObstacle(location) {
         for (var i = 0; i < that.obstacles.length; i++) {
             if (location.toString() == that.obstacles[i].toString()) {
-                that.message = "Obstacle detected at " + location.toString();
                 return true;
+
             }
         }
         return false;
     }
 
 }
+

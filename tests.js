@@ -9,11 +9,11 @@ QUnit.test("Initialise mars rover location when it has no assigned value", funct
 });
 QUnit.test("Initialise mars rover direction", function (assert) {
     var marsRover = new MarsRover([0, 0], "S");
-    assert.equal(marsRover.direction, "S", "Mars Rover direction should be the set value S");
+    assert.ok(marsRover.direction instanceof South, "Mars Rover direction should be the set value S");
 });
 QUnit.test("Initialise mars rover direction when it has no assigned value", function (assert) {
     var marsRover = new MarsRover([0, 0]);
-    assert.equal(marsRover.direction, "N", "Mars Rover direction should initialise to N if no value has been set");
+    assert.ok(marsRover.direction instanceof North, "Mars Rover direction should be the set value North");
 });
 QUnit.test("Check forward movement when facing North", function (assert) {
     var marsRover = new MarsRover([0, 0], "N");
@@ -59,70 +59,70 @@ QUnit.module("Implement commands that turn the rover left/right ");
 QUnit.test("Check left turn when facing North", function (assert) {
     var marsRover = new MarsRover([0, 0], "N");
     marsRover.commandsInput("l");
-    assert.equal(marsRover.direction, "W", "Mars Rover direction should change from North to West");
+    assert.ok(marsRover.direction instanceof West, "Mars Rover direction should change from North to West");
 });
 QUnit.test("Check right turn when facing North", function (assert) {
     var marsRover = new MarsRover([0, 0], "N");
     marsRover.commandsInput("r");
-    assert.equal(marsRover.direction, "E", "Mars Rover direction should change from North to East");
+    assert.ok(marsRover.direction instanceof East, "Mars Rover direction should change from North to East");
 });
 QUnit.test("Check left turn when facing South", function (assert) {
     var marsRover = new MarsRover([0, 0], "S");
     marsRover.commandsInput("l");
-    assert.equal(marsRover.direction, "W", "Mars Rover direction should change from South to West");
+    assert.ok(marsRover.direction instanceof West, "Mars Rover direction should change from South to West");
 });
 QUnit.test("Check right turn when facing South", function (assert) {
     var marsRover = new MarsRover([0, 0], "S");
     marsRover.commandsInput("r");
-    assert.equal(marsRover.direction, "E", "Mars Rover direction should change from South to East");
+    assert.ok(marsRover.direction instanceof East, "Mars Rover direction should change from South to East");
 });
 QUnit.test("Check left turn when facing East", function (assert) {
     var marsRover = new MarsRover([0, 0], "E");
     marsRover.commandsInput("l");
-    assert.equal(marsRover.direction, "N", "Mars Rover direction should change from East to North");
+    assert.ok(marsRover.direction instanceof North, "Mars Rover direction should change from East to North");
 });
 QUnit.test("Check right turn when facing East", function (assert) {
     var marsRover = new MarsRover([0, 0], "E");
     marsRover.commandsInput("r");
-    assert.equal(marsRover.direction, "S", "Mars Rover direction should change from East to South");
+    assert.ok(marsRover.direction instanceof South, "Mars Rover direction should change from East to South");
 });
 QUnit.test("Check left turn when facing West", function (assert) {
     var marsRover = new MarsRover([0, 0], "W");
     marsRover.commandsInput("l");
-    assert.equal(marsRover.direction, "S", "Mars Rover direction should change from West to South");
+    assert.ok(marsRover.direction instanceof South, "Mars Rover direction should change from West to South");
 });
 QUnit.test("Check right turn when facing West", function (assert) {
     var marsRover = new MarsRover([0, 0], "W");
     marsRover.commandsInput("r");
-    assert.equal(marsRover.direction, "N", "Mars Rover direction should change from West to North");
+    assert.ok(marsRover.direction instanceof North, "Mars Rover direction should change from West to North");
 });
 QUnit.module("Test both movement and turning");
 QUnit.test("Multiple commands test", function (assert) {
     var marsRover = new MarsRover([0, 0], "N");
     marsRover.commandsInput("ffrfrbl");
     assert.deepEqual(marsRover.location, [1, 3], "Mars Rover location should be [1,3]");
-    assert.equal(marsRover.direction, "W", "Mars Rover direction should change to W");
+    assert.ok(marsRover.direction instanceof West, "Mars Rover direction should change to West");
 });
 QUnit.test("Empty commands test", function (assert) {
     var marsRover = new MarsRover([0, 0], "N");
     marsRover.commandsInput("");
     assert.deepEqual(marsRover.location, [0, 0], "Mars Rover location should be [0,0]");
-    assert.equal(marsRover.direction, "N", "Mars Rover direction should stay at N");
+    assert.ok(marsRover.direction instanceof North, "Mars Rover direction should be North");
 });
 QUnit.test("Invalid commands test", function (assert) {
     var marsRover = new MarsRover([0, 0], "N");
     marsRover.commandsInput("qwerty");
     assert.deepEqual(marsRover.location, [0, 0], "Mars Rover location should be [0,0]");
-    assert.equal(marsRover.direction, "E", "Mars Rover direction should change to E and ignore the other invalid commands");
+    assert.ok(marsRover.direction instanceof East, "Mars Rover direction should be East and ignore the other invalid commands");
 });
 QUnit.module("Implement wrapping from one edge of the grid to another");
 QUnit.test("Initialise grid with assigned values", function (assert) {
     var marsRover = new MarsRover([0, 0], "N", [10, 10]);
-    assert.deepEqual(marsRover.grid, [10, 10], "Mars Rover grid should be [10,10] ");
+    assert.deepEqual([marsRover.grid.xLength, marsRover.grid.yLength], [10, 10], "Mars Rover grid should be [10,10] ");
 });
 QUnit.test("Initialise default grid if there is no assigned value", function (assert) {
     var marsRover = new MarsRover([0, 0], "N");
-    assert.deepEqual(marsRover.grid, [100, 100], "Mars Rover grid should be the default [100,100] ");
+    assert.deepEqual([marsRover.grid.xLength, marsRover.grid.yLength], [100, 100], "Mars Rover grid should be the default [100,100] ");
 });
 QUnit.test("Check the top Y wrapping", function (assert) {
     var marsRover = new MarsRover([0, 9], "N", [10, 10]);
@@ -147,11 +147,11 @@ QUnit.test("Check the bottom X wrapping", function (assert) {
 QUnit.module("Implement obstacle detection before each move to a new square");
 QUnit.test("Initialise obstacles with assigned values", function (assert) {
     var marsRover = new MarsRover([0, 0], "N", [10, 10], [[4, 6], [2, 5], [0, 9]]);
-    assert.deepEqual(marsRover.obstacles, [[4, 6], [2, 5], [0, 9]], "Mars Rover obstacles should be [4, 6], [2, 5], [0, 9]");
+    assert.deepEqual(marsRover.grid.obstacles, [[4, 6], [2, 5], [0, 9]], "Mars Rover obstacles should be [4, 6], [2, 5], [0, 9]");
 });
 QUnit.test("Initialise obstacles when it has no assigned value", function (assert) {
     var marsRover = new MarsRover([0, 0], "N", [10, 10]);
-    assert.deepEqual(marsRover.obstacles, [], "Mars Rover obstacles should be the default empty");
+    assert.deepEqual(marsRover.grid.obstacles, [], "Mars Rover obstacles should be the default empty");
 });
 QUnit.test("Mars Rover should detect an obstacle", function (assert) {
     var marsRover = new MarsRover([0, 0], "N", [10, 10], [[0, 1]]);
